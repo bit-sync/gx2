@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Pannel</title>
+</head>
+<body><br>
+    <form id="game-add-form", method="POST" action="/admin/add-game-form">
+        <label for="gn">Game name:</label><br><br>
+        <input type="text" id="gn" name="gn" required><br><br>
+        <labal for="gp">Game Path:</labal><br><br>
+        <input type="text" id="gp" name="gp" required><br><br>
+        <label for="gp">Game Image Path:</label><br><br>
+        <input id="gip" name="gip" required></input><br><br>
+        <label for="gns">Game Name Short</label><br><br>
+        <input type="text" id="gns" name="gns" required><br><br><br>
+        <button type="submit">create</button>
+    </form>
+</body>
+</html>

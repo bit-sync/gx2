@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Galaxy Games</title>
+  <link rel="icon" type="image/x-icon" href="/imgs/brand-imgs/favicon.png">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<style>
+    img {
+        object-fit: cover;
+    }
+</style>
+    <body>
+        <h1>Welcome to Galaxy Gaming 2!</h1>
+        <p>Thanks for using GX2.</p>
+        <div class="gamebtncenter">
+            {% for game in games %}
+                <button style="width: 200px; height: 200px;" onclick="location.href='/player?name={{ game.name_short }}';" class="rgbbtn"><img src="{{ game.img_path }}" width=100px height=100px><br>{{ game.name }}</button>
+            {% endfor %}
+        </div>
+        <div>
+          <footer>Website version: 1.0<br>Thanks for visiting GX2!</footer>
+        </div>
+    </body>
+</html>
