@@ -3,4 +3,4 @@ from config import config
 
 if __name__ == '__main__':
     print(config["pin"])
-    app.run(debug=True)
+    app.run(debug=True, port="80")
