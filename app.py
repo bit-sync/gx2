@@ -10,7 +10,9 @@ db.create_table('games', {
     'path': 'TEXT',
     'img_path': 'TEXT',
     'name': 'TEXT',
-    'name_short': 'TEXT'
+    'name_short': 'TEXT',
+    'runcount': 'INTEGER'
+
 })
 
 @app.route('/player')
@@ -21,6 +23,8 @@ def player():
         game = db.select('games', query={'name_short': game_n})
         print(game_n)
         print(game)
+        if game:
+            db.update('games', {'runcount': game[0]['runcount'] + 1}, {'id': game[0]['id']})  # Increment the runcount by 1
         return render_template('player.html', game=game[0])
     else:
         return 'No game name provided in the query parameters.'
@@ -28,7 +32,10 @@ def player():
 @app.route('/')
 def index():
     games = db.select('games')
-    return render_template('base.html', games=games)
+
+    # Sort the dictionary by value in descending order
+    sorted_data = sorted(games, key=lambda x: x["runcount"], reverse=True)
+    return render_template('base.html', games=sorted_data)
     
 @app.route('/admin/login_form/', methods=['POST', "GET"])
 def admin_login_form():
@@ -59,10 +66,17 @@ def add_game_form():
             'path': game_path,
             'img_path': game_img_path,
             'name': game_name,
-            'name_short': game_name_short
+            'name_short': game_name_short,
+            'runcount': 0  # Initialize runcount to 0
         })
         return 'Game added successfully'
     return redirect('/admin/')
+@app.route('/admin/clear_runcount')
+def clear_runcount():
+    games = db.select('games')
+    for game in games:
+        db.update('games', {'runcount': 0}, {'id': game['id']})
+    return 'Runcount cleared successfully'
 # Static file routes
 @app.route('/<path:path>')
 def send_static_file(path):
